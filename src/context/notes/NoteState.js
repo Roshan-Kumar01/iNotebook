@@ -18,7 +18,7 @@ const NoteState = (props) => {
       });
       //Logic to add on client side
       const json = await response.json()
-      console.log(json)
+      // console.log(json)
       setNotes(json)
     }
     const[notes,setNotes] = useState(notesInitial);
@@ -34,9 +34,11 @@ const NoteState = (props) => {
         },
         body: JSON.stringify({title,description,tag}),
       });
+      const json = await response.json()
+      console.log("addedNote",json)
       //Logic to add on client side
       const note = {
-        "_id": "652e61631f2bac7834e9b2kk",
+        "_id": json._id,
         "user": "652e3dad6c9c7e225408f53f",
         "title": title,
         "description": description,
@@ -45,6 +47,7 @@ const NoteState = (props) => {
         "__v": 0
       }
       setNotes(notes.concat(note))
+      // console.log(note)
     }
     // Delete a Note
     const deleteNote = async(id) =>{
@@ -72,16 +75,19 @@ const NoteState = (props) => {
         body: JSON.stringify({title,description,tag}),
       });
       //Logic to edit in client
-      for(let index = 0; index < notes.length; index++)
+      let newNotes = JSON.parse(JSON.stringify(notes))
+      for(let index = 0; index < newNotes.length; index++)
       {
-        const element = notes[index];
+        const element = newNotes[index];
         if(element._id === id)
         {
-           element.title = title;
-           element.description = description;
-           element.tag = tag;
+           newNotes[index].title = title;
+           newNotes[index].description = description;
+           newNotes[index].tag = tag;
+           break;
         }
-      }
+      } 
+      setNotes(newNotes)
     }
 
     return (

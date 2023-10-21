@@ -31,7 +31,7 @@ body('description').isLength({min:5}).withMessage('Description must be atleast 5
             title,description,tag,user:req.user.id
         })
         const saveNote= await note.save()
-
+        // console.log("saveNote",saveNote)
         res.json(saveNote)
     } catch (error) {
         console.log(error.messase)
