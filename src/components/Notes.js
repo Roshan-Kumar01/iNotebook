@@ -3,7 +3,8 @@ import noteContext from '../context/notes/noteContext'
 import Noteitem from './Noteitem';
 import AddNote from './AddNote';
 
-const Notes = () => {
+const Notes = (props) => {
+  const{showAlert} = props
   const context = useContext(noteContext)
   const { notes, getNotes, editNote } = context;
   useEffect(() => {
@@ -21,6 +22,7 @@ const Notes = () => {
     e.preventDefault();  //stop page reloading
     editNote(note.id,note.etitle,note.edescription,note.etag)
     refClose.current.click();
+    showAlert("Note updated successfully","success")
     console.log("Updating the note....",note);
   }
   const onChange = (e) => {
@@ -28,7 +30,7 @@ const Notes = () => {
   }
   return (
     <>
-      <AddNote />
+      <AddNote showAlert={showAlert}/>
       {/* <!-- Button trigger modal --> */}
       <button ref={ref} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Launch demo modal
@@ -42,7 +44,7 @@ const Notes = () => {
               <h1 className="modal-title fs-5" id="exampleModalLabel">Edit Note</h1>
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div className="modal-body">
+            <div className="modal-body"> 
               <form>
                 <div className="mb-3">
                   <label htmlFor="etitle" className="form-label">Title</label>
@@ -71,7 +73,7 @@ const Notes = () => {
           {notes.length === 0 && 'No notes to display'}
         </div>
         {notes.map((note) => {
-          return <Noteitem key={note._id} updateNote={updateNote} note={note} />
+          return <Noteitem key={note._id} updateNote={updateNote} note={note} showAlert={showAlert} />
         })}
       </div>
     </>

@@ -38,7 +38,7 @@ const NoteState = (props) => {
       setNotes(notes.concat(note))
     }
     // Delete a Note
-    const deleteNote = async(id) =>{
+    const deleteNote = async(id,showAlert) =>{
       //TODO:API CALL
       const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
         method: "DELETE", 
@@ -50,6 +50,7 @@ const NoteState = (props) => {
       //Logic to delete on client side
       const newNotes = notes.filter((note) => {return note._id!==id})
       setNotes(newNotes)
+      showAlert("Note deleted successfully","success")
     }
     // Edit a Note
     const editNote = async (id, title, description, tag) =>{

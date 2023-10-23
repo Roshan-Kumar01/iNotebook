@@ -1,7 +1,8 @@
 import React,{ useState }from 'react'
 import {useNavigate} from 'react-router-dom'
 
-const SignUp = () => {
+const SignUp = (props) => {
+    const{showAlert} = props
     let navigate = useNavigate()
     const[credentials,setCredentials] = useState({name:"",email:"",password:"",cpassword:""})
     
@@ -25,9 +26,10 @@ const SignUp = () => {
                 //to do work
                 localStorage.setItem('token',json.authtoken)
                 navigate("/")
+                showAlert("Account created successfuly","success")
               }else
               {
-                alert("Invalid credentials")
+                showAlert("The email address you're trying to add, has been registered as an account already","warning")
               }
             
     }
