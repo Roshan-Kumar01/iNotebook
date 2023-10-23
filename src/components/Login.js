@@ -23,6 +23,7 @@ const Login = () => {
               if(json.success)
               {
                 //to do work
+                localStorage.setItem('token',json.authtoken)
                 navigate("/")
               }else
               {
